@@ -20,6 +20,9 @@ using namespace std;
  * @return false otherwise
  */
 bool isPalindrome(int x) {
+    if (x >= 0 && x < 10) {
+        return true;
+    }
     if (x < 0 || x % 10 == 0) {
         return false;
     }
@@ -37,7 +40,7 @@ bool isPalindrome(int x) {
 }
 
 int main() {
-    bool isPalin = isPalindrome(10);
+    bool isPalin = isPalindrome(0);
     cout << isPalin << endl;
     return 0;
 }
