@@ -1,22 +1,35 @@
+#include <algorithm>
 #include <cmath>
 #include <iostream>
 #include <stdio.h>
 #include <string>
+#include <vector>
 
 class Solution {
 public:
     bool hasAllCodes(std::string s, int k) {
-        int allBiCodes = std::pow(2, k);
+        int allBiCodes = 1 << k;
         if (s.length() < allBiCodes + k - 1)
             return false;
 
-        int countDistincSubstring = 0;
+        std::vector<std::string> binGot = {};
 
+        std::string subString = s.substr(0, k);
         for (int i = 0; i <= s.length() - k; i++) {
-            std::string subString = s.substr(i, k);
-            int dec = std::stoi(subString, 0, 2);
+            if (s.length() - i < allBiCodes + k - 1)
+                return false;
+            if (i > 0) {
+                subString.erase(0, 1).push_back(s[i + k - 1]);
+            }
+            if (std::find(binGot.begin(), binGot.end(), subString) == binGot.end()) {
+                allBiCodes--;
+                binGot.push_back(subString);
+                if (allBiCodes == 0) {
+                    return true;
+                }
+            }
         }
-        return countDistincSubstring == allBiCodes;
+        return false;
     }
 };
 
